@@ -1,0 +1,594 @@
+[
+    {
+        "purpose": "Consume HTTP payloads from localhost and send to FizzBuzz producer with SSL and username/password authentication.",
+        "routeCode": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user1&password=pass1\")"
+    },
+    {
+        "purpose": "Consume HTTP payloads from localhost and send to FizzBuzz producer on testhost.com with username/password authentication.",
+        "routeCode": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://testhost.com:9000?username=user2&password=pass2\")"
+    },
+    {
+        "purpose": "Consume HTTP payloads from google.com and send to named FizzBuzz producer with username/password authentication.",
+        "routeCode": "from(\"jetty:http://google.com:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://google.com:9011?name=test2&username=user3&password=pass3\")"
+    },
+    {
+        "purpose": "Consume HTTP payloads from localhost and send to named FizzBuzz producer with timeout, SSL, and username/password authentication.",
+        "routeCode": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&timeout=60s&sslContextParameters=#sslContextParams&username=user4&password=pass4\")"
+    },
+    {
+        "purpose": "Consume FTP payloads with SSL and send to SSL secured FizzBuzz producer with username/password authentication and TTL.",
+        "routeCode": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"sfizzbuzz://host.com:8443?name=test2&sslcert=sslcert2&username=user5&password=pass5&ttl=30s\")"
+    },
+    {
+        "purpose": "Consume FTP payloads with SSL and send to SSL secured FizzBuzz producer on localhost with username/password authentication and TTL.",
+        "routeCode": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"sfizzbuzz://localhosts:9011?name=test2&sslcert=sslcert2&username=user6&password=pass6&ttl=30s\")"
+    },
+    {
+        "purpose": "Consume FTP payloads with SSL and send to SSL secured FizzBuzz producer on localhost with username/password authentication, TTL, and provided credentials.",
+        "routeCode": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"sfizzbuzz://localhosts:9011?name=test2&sslcert=sslcert2&username=fred&password=flintstone&ttl=30s\")"
+    },
+    {
+        "purpose": "Consume HTTP payloads from google.com and send to named FizzBuzz producer with username/password authentication.",
+        "routeCode": "from(\"jetty:http://google.com:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://google.com:9011?name=test2&username=ronald&password=mcdonald\")"
+    },
+    {
+        "purpose": "Consume JMS payloads and send to FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+        "routeCode": "from(\"jms:yourQueue?brokerURL=tcp://jms-${random:numeric:3}:61616&username=jmsUser&password=jmsPass\").to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user9&password=pass9\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume Kafka payloads and send to FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+        "routeCode": "from(\"kafka:yourKafkaTopic?brokers=kafka-host-${random:numeric:4}&securityProtocol=SSL&sslTruststoreLocation=/path/to/truststore&sslTruststorePassword=truststorePass&sslKeystoreLocation=/path/to/keystore&sslKeystorePassword=keystorePass&sslKeyPassword=keyPass&username=kafkaUser&password=kafkaPass\").to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads and send to Kafka with SSL, username, and password authentication. Include exception handling and retry processing.",
+        "routeCode": "from(\"fizzbuzz://localhost:9011\").to(\"kafka:yourKafkaTopic?brokers=kafka-host-${random:numeric:4}&securityProtocol=SSL&sslTruststoreLocation=/path/to/truststore&sslTruststorePassword=truststorePass&sslKeystoreLocation=/path/to/keystore&sslKeystorePassword=keystorePass&sslKeyPassword=keyPass\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads and send to ActiveMQ with username and password authentication. Include exception handling and retry processing.",
+        "routeCode": "from(\"fizzbuzz://localhost:9011\").to(\"activemq:queue:yourQueue?brokerURL=tcp://activemq-${random:numeric:3}:61616&username=user2&password=pass2\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads and send to File with SSL, username, and password authentication. Include exception handling and retry processing.",
+        "routeCode": "from(\"fizzbuzz://localhost:9011\").to(\"file:/path/to/directory?fileName=output.txt&fileExist=Append&tempFileName=${file:onlyname}.tmp&fileExist=Append&writeTimeout=5000&username=user3&password=pass3&sslContextParameters=#sslContextParams\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads and send to HTTP with username and password authentication. Include exception handling and retry processing.",
+        "routeCode": "from(\"fizzbuzz://localhost:9011\").to(\"http:your-api-endpoint?username=user4&password=pass4\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads and send to RabbitMQ with SSL, username, and password authentication. Include exception handling and retry processing.",
+        "routeCode": "from(\"fizzbuzz://localhost:9011\").to(\"rabbitmq:yourExchange?hostname=rabbitmq-${random:numeric:3}&username=rabbitUser&password=rabbitPass&sslContextParameters=#sslContextParams\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads and send to JMS with username and password authentication. Include exception handling and retry processing.",
+        "routeCode": "from(\"fizzbuzz://localhost:9011\").to(\"jms:yourQueue?brokerURL=tcp://jms-${random:numeric:3}:61616&timeout=5000&username=jmsUser&password=jmsPass\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads and send to AWS S3 with SSL, username, and password authentication. Include exception handling and retry processing.",
+        "routeCode": "from(\"fizzbuzz://localhost:9011\").to(\"aws-s3:yourBucket?accessKey=yourAccessKey&secretKey=yourSecretKey&region=us-east-1&sslContextParameters=#sslContextParams\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads and send to MongoDB with SSL, username, and password authentication. Include exception handling and retry processing.",
+        "routeCode": "from(\"fizzbuzz://localhost:9011\").to(\"mongodb:mongoClient?database=yourDatabase&collection=yourCollection&username=mongoUser&password=mongoPass&sslContextParameters=#sslContextParams\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads and send to AWS SQS with SSL, username, and password authentication. Include exception handling and retry processing.",
+        "routeCode": "from(\"fizzbuzz://localhost:9011\").to(\"aws-sqs:yourQueue?accessKey=yourAccessKey&secretKey=yourSecretKey&region=us-west-2&sslContextParameters=#sslContextParams\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads and send to Email with SSL, username, and password authentication. Include exception handling and retry processing.",
+        "routeCode": "from(\"fizzbuzz://localhost:9011\").to(\"smtps://smtp.gmail.com?to=recipient@example.com&subject=YourSubject&timeout=5000&username=emailUser&password=emailPass&sslContextParameters=#sslContextParams\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume HTTP payloads from localhost and send to FizzBuzz producer with SSL and username/password authentication.",
+        "routeCode": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user1&password=pass1\")"
+    },
+    {
+        "purpose": "Consume HTTP payloads from localhost and send to FizzBuzz producer on testhost.com with username/password authentication.",
+        "routeCode": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://testhost.com:9000?username=user2&password=pass2\")"
+    },
+    {
+        "purpose": "Consume HTTP payloads from google.com and send to named FizzBuzz producer with username/password authentication.",
+        "routeCode": "from(\"jetty:http://google.com:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://google.com:9011?name=test2&username=user3&password=pass3\")"
+    },
+    {
+        "purpose": "Consume HTTP payloads from localhost and send to named FizzBuzz producer with timeout, SSL, and username/password authentication.",
+        "routeCode": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&timeout=60s&sslContextParameters=#sslContextParams&username=user4&password=pass4\")"
+    },
+    {
+        "purpose": "Consume FTP payloads with SSL and send to SSL secured FizzBuzz producer with username/password authentication and TTL.",
+        "routeCode": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"sfizzbuzz://host.com:8443?name=test2&sslcert=sslcert2&username=user5&password=pass5&ttl=30s\")"
+    },
+    {
+        "purpose": "Consume FTP payloads with SSL and send to SSL secured FizzBuzz producer on localhost with username/password authentication and TTL.",
+        "routeCode": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"sfizzbuzz://localhosts:9011?name=test2&sslcert=sslcert2&username=user6&password=pass6&ttl=30s\")"
+    },
+    {
+        "purpose": "Consume FTP payloads with SSL and send to SSL secured FizzBuzz producer on localhost with username/password authentication, TTL, and provided credentials.",
+        "routeCode": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"sfizzbuzz://localhosts:9011?name=test2&sslcert=sslcert2&username=fred&password=flintstone&ttl=30s\")"
+    },
+    {
+        "purpose": "Consume HTTP payloads from google.com and send to named FizzBuzz producer with username/password authentication.",
+        "routeCode": "from(\"jetty:http://google.com:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://google.com:9011?name=test2&username=ronald&password=mcdonald\")"
+    },
+    {
+        "purpose": "Consume JMS payloads and send to FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+        "routeCode": "from(\"jms:yourQueue?brokerURL=tcp://jms-${random:numeric:3}:61616&username=jmsUser&password=jmsPass\").to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user9&password=pass9\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume Kafka payloads and send to FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+        "routeCode": "from(\"kafka:yourKafkaTopic?brokers=kafka-host-${random:numeric:4}&securityProtocol=SSL&sslTruststoreLocation=/path/to/truststore&sslTruststorePassword=truststorePass&sslKeystoreLocation=/path/to/keystore&sslKeystorePassword=keystorePass&sslKeyPassword=keyPass&username=kafkaUser&password=kafkaPass\").to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume HTTP payloads from localhost and send to FizzBuzz producer with SSL and username/password authentication.",
+        "routeCode": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user11&password=pass11\")"
+    },
+    {
+        "purpose": "Consume HTTP payloads from localhost and send to FizzBuzz producer on testhost.com with username/password authentication.",
+        "routeCode": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://testhost.com:9000?username=user12&password=pass12\")"
+    },
+    {
+        "purpose": "Consume HTTP payloads from google.com and send to named FizzBuzz producer with username/password authentication.",
+        "routeCode": "from(\"jetty:http://google.com:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://google.com:9011?name=test22&username=user13&password=pass13\")"
+    },
+    {
+        "purpose": "Consume HTTP payloads from localhost and send to named FizzBuzz producer with timeout, SSL, and username/password authentication.",
+        "routeCode": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&timeout=60s&sslContextParameters=#sslContextParams&username=user14&password=pass14\")"
+    },
+    {
+        "purpose": "Consume FTP payloads with SSL and send to SSL secured FizzBuzz producer with username/password authentication and TTL.",
+        "routeCode": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"sfizzbuzz://host.com:8443?name=test25&sslcert=sslcert2&username=user15&password=pass15&ttl=30s\")"
+    },
+    {
+        "purpose": "Consume FTP payloads with SSL and send to SSL secured FizzBuzz producer on localhost with username/password authentication and TTL.",
+        "routeCode": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"sfizzbuzz://localhosts:9011?name=test26&sslcert=sslcert2&username=user16&password=pass16&ttl=30s\")"
+    },
+    {
+        "purpose": "Consume FTP payloads with SSL and send to SSL secured FizzBuzz producer on localhost with username/password authentication, TTL, and provided credentials.",
+        "routeCode": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"sfizzbuzz://localhosts:9011?name=test27&sslcert=sslcert2&username=fred&password=flintstone&ttl=30s\")"
+    },
+    {
+        "purpose": "Consume HTTP payloads from google.com and send to named FizzBuzz producer with username/password authentication.",
+        "routeCode": "from(\"jetty:http://google.com:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://google.com:9011?name=test28&username=user18&password=pass18\")"
+    },
+    {
+        "purpose": "Consume JMS payloads and send to FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+        "routeCode": "from(\"jms:yourQueue?brokerURL=tcp://jms-${random:numeric:3}:61616&username=jmsUser&password=jmsPass\").to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user29&password=pass19\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume Kafka payloads and send to FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+        "routeCode": "from(\"kafka:yourKafkaTopic?brokers=kafka-host-${random:numeric:4}&securityProtocol=SSL&sslTruststoreLocation=/path/to/truststore&sslTruststorePassword=truststorePass&sslKeystoreLocation=/path/to/keystore&sslKeystorePassword=keystorePass&sslKeyPassword=keyPass&username=kafkaUser&password=kafkaPass\").to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume HTTP payloads from localhost and send to FizzBuzz producer with SSL, username/password authentication, and timeout handling.",
+        "routeCode": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user1&password=pass1&timeout=5000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+    },
+    {
+        "purpose": "Consume HTTP payloads from localhost and send to FizzBuzz producer on testhost.com with username/password authentication and retry processing.",
+        "routeCode": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://testhost.com:9000?username=user2&password=pass2\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume HTTP payloads from google.com and send to named FizzBuzz producer with username/password authentication and exception handling.",
+        "routeCode": "from(\"jetty:http://google.com:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://google.com:9011?name=test2&username=user3&password=pass3\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+    },
+    {
+        "purpose": "Consume HTTP payloads from localhost and send to named FizzBuzz producer with timeout, SSL, and username/password authentication.",
+        "routeCode": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&timeout=60000&sslContextParameters=#sslContextParams&username=user4&password=pass4\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+    },
+    {
+        "purpose": "Consume FTP payloads with SSL and send to SSL secured FizzBuzz producer with username/password authentication, TTL, and retry processing.",
+        "routeCode": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"sfizzbuzz://host.com:8443?name=test2&sslcert=sslcert2&username=user5&password=pass5&ttl=30000\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume FTP payloads with SSL and send to SSL secured FizzBuzz producer on localhost with username/password authentication, TTL, and exception handling.",
+        "routeCode": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"sfizzbuzz://localhosts:9011?name=test2&sslcert=sslcert2&username=user6&password=pass6&ttl=30000\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+    },
+    {
+        "purpose": "Consume FTP payloads with SSL and send to SSL secured FizzBuzz producer on localhost with username/password authentication, TTL, and provided credentials.",
+        "routeCode": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"sfizzbuzz://localhosts:9011?name=test2&sslcert=sslcert2&username=fred&password=flintstone&ttl=30000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+    },
+    {
+        "purpose": "Consume HTTP payloads from google.com and send to named FizzBuzz producer with username/password authentication.",
+        "routeCode": "from(\"jetty:http://google.com:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://google.com:9011?name=test2&username=ronald&password=mcdonald\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+    },
+    {
+        "purpose": "Consume JMS payloads and send to FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+        "routeCode": "from(\"jms:yourQueue?brokerURL=tcp://jms-${random:numeric:3}:61616&username=jmsUser&password=jmsPass\").to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user9&password=pass9\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume Kafka payloads and send to FizzBuzz producer with SSL, username/password authentication, and exception handling.",
+        "routeCode": "from(\"kafka:yourKafkaTopic?brokers=kafka-host-${random:numeric:4}&securityProtocol=SSL&sslTruststoreLocation=/path/to/truststore&sslTruststorePassword=truststorePass&sslKeystoreLocation=/path/to/keystore&sslKeystorePassword=keystorePass&sslKeyPassword=keyPass&username=kafkaUser&password=kafkaPass\").to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+    },
+    {
+        "purpose": "Consume HTTP payloads from localhost and send to FizzBuzz producer with SSL, username/password authentication, and exception handling.",
+        "routeCode": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user11&password=pass11\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+    },
+    {
+        "purpose": "Consume HTTP payloads from localhost and send to FizzBuzz producer on testhost.com with SSL, username/password authentication, and timeout handling.",
+        "routeCode": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://testhost.com:9000?sslContextParameters=#sslContextParams&username=user12&password=pass12&timeout=5000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+    },
+    {
+        "purpose": "Consume HTTP payloads from google.com and send to named FizzBuzz producer with SSL, username/password authentication, and timeout handling.",
+        "routeCode": "from(\"jetty:http://google.com:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://google.com:9011?name=test2&sslContextParameters=#sslContextParams&username=user13&password=pass13&timeout=10000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+    },
+    {
+        "purpose": "Consume HTTP payloads from localhost and send to named FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+        "routeCode": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&sslContextParameters=#sslContextParams&username=user14&password=pass14\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume HTTP payloads from localhost and send to named FizzBuzz producer with SSL, username/password authentication, and timeout handling.",
+        "routeCode": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&sslContextParameters=#sslContextParams&username=user15&password=pass15&timeout=8000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+    },
+    {
+        "purpose": "Consume FTP payloads with SSL and send to SSL secured FizzBuzz producer with username/password authentication, TTL, and retry processing.",
+        "routeCode": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"sfizzbuzz://host.com:8443?name=test2&sslcert=sslcert2&username=user16&password=pass16&ttl=30000\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume FTP payloads with SSL and send to SSL secured FizzBuzz producer on localhost with username/password authentication, TTL, and exception handling.",
+        "routeCode": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"sfizzbuzz://localhosts:9011?name=test2&sslcert=sslcert2&username=user17&password=pass17&ttl=30000\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+    },
+    {
+        "purpose": "Consume FTP payloads with SSL and send to SSL secured FizzBuzz producer on localhost with username/password authentication, TTL, and provided credentials.",
+        "routeCode": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"sfizzbuzz://localhosts:9011?name=test2&sslcert=sslcert2&username=fred&password=flintstone&ttl=30000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+    },
+    {
+        "purpose": "Consume HTTP payloads from google.com and send to named FizzBuzz producer with username/password authentication and timeout handling.",
+        "routeCode": "from(\"jetty:http://google.com:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://google.com:9011?name=test2&username=user19&password=pass19&timeout=6000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+    },
+    {
+        "purpose": "Consume JMS payloads and send to FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+        "routeCode": "from(\"jms:yourQueue?brokerURL=tcp://jms-${random:numeric:3}:61616&username=jmsUser&password=jmsPass\").to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user20&password=pass20\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume Kafka payloads and send to FizzBuzz producer with SSL, username/password authentication, and exception handling.",
+        "routeCode": "from(\"kafka:yourKafkaTopic?brokers=kafka-host-${random:numeric:4}&securityProtocol=SSL&sslTruststoreLocation=/path/to/truststore&sslTruststorePassword=truststorePass&sslKeystoreLocation=/path/to/keystore&sslKeystorePassword=keystorePass&sslKeyPassword=keyPass&username=kafkaUser&password=kafkaPass\").to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+    },
+    {
+        "purpose": "Consume JMS payloads and send to FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+        "routeCode": "from(\"jms:yourQueue?brokerURL=tcp://jms-${random:numeric:3}:61616&username=jmsUser&password=jmsPass\").to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user1&password=pass1\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume SEDA payloads and send to FizzBuzz producer with username/password authentication and exception handling.",
+        "routeCode": "from(\"seda:yourSedaQueue\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?username=user2&password=pass2\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+    },
+    {
+        "purpose": "Consume VM payloads and send to named FizzBuzz producer with timeout, SSL, and username/password authentication.",
+        "routeCode": "from(\"vm:yourVmQueue\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&timeout=60000&sslContextParameters=#sslContextParams&username=user3&password=pass3\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+    },
+    {
+        "purpose": "Consume Direct payloads and send to FizzBuzz producer with SSL, username/password authentication, and exception handling.",
+        "routeCode": "from(\"direct:yourDirectEndpoint\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user4&password=pass4\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+    },
+    {
+        "purpose": "Consume File payloads and send to FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+        "routeCode": "from(\"file:/your/directory\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user5&password=pass5\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume Timer payloads and send to FizzBuzz producer with SSL, username/password authentication, and timeout handling.",
+        "routeCode": "from(\"timer:yourTimer?period=5000\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user6&password=pass6&timeout=5000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+    },
+    {
+        "purpose": "Consume CXF payloads and send to named FizzBuzz producer with username/password authentication and timeout handling.",
+        "routeCode": "from(\"cxf:http://your-cxf-endpoint\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&username=user7&password=pass7&timeout=8000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+    },
+    {
+        "purpose": "Consume SQL payloads and send to FizzBuzz producer with SSL, username/password authentication, and exception handling.",
+        "routeCode": "from(\"sql:SELECT * FROM your_table\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user8&password=pass8\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+    },
+    {
+        "purpose": "Consume CXFRS payloads and send to FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+        "routeCode": "from(\"cxfrs:http://your-cxfrs-endpoint\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user9&password=pass9\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume Bean payloads and send to FizzBuzz producer with SSL, username/password authentication, and exception handling.",
+        "routeCode": "from(\"bean:yourBean\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user10&password=pass10\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+    },
+    {
+        "purpose": "Consume Log payloads and send to FizzBuzz producer with SSL, username/password authentication, and timeout handling.",
+        "routeCode": "from(\"log:yourLog\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user11&password=pass11&timeout=6000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+    },
+    {
+        "purpose": "Consume CXF-RS payloads and send to FizzBuzz producer with SSL, username/password authentication, and timeout handling.",
+        "routeCode": "from(\"cxfrs:http://your-cxf-rs-endpoint\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user12&password=pass12&timeout=5000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+    },
+    {
+        "purpose": "Consume RSS payloads and send to named FizzBuzz producer with username/password authentication and retry processing.",
+        "routeCode": "from(\"rss:yourRssFeed\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&username=user13&password=pass13\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume Mock payloads and send to FizzBuzz producer with SSL, username/password authentication, and exception handling.",
+        "routeCode": "from(\"mock:yourMockEndpoint\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user14&password=pass14\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+    },
+    {
+        "purpose": "Consume Restlet payloads and send to FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+        "routeCode": "from(\"restlet:http://your-restlet-endpoint\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user15&password=pass15\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume Atom payloads and send to FizzBuzz producer with SSL, username/password authentication, and timeout handling.",
+        "routeCode": "from(\"atom:yourAtomFeed\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user16&password=pass16&timeout=7000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+    },
+    {
+        "purpose": "Consume Weather payloads and send to FizzBuzz producer with SSL, username/password authentication, and exception handling.",
+        "routeCode": "from(\"weather:yourWeatherEndpoint\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user17&password=pass17\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+    },
+    {
+        "purpose": "Consume FtpServer payloads and send to FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+        "routeCode": "from(\"ftp-server:yourFtpServer\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user18&password=pass18\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume Ftp payloads and send to named FizzBuzz producer with timeout, SSL, and username/password authentication.",
+        "routeCode": "from(\"ftp:yourFtpEndpoint\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&timeout=8000&sslContextParameters=#sslContextParams&username=user19&password=pass19\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+    },
+    {
+        "purpose": "Consume Language payloads and send to FizzBuzz producer with SSL, username/password authentication, and timeout handling.",
+        "routeCode": "from(\"language:yourLanguageEndpoint\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user20&password=pass20&timeout=9000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+    },
+    {
+        "purpose": "Consume NettyUDP payloads and send to named FizzBuzz producer with username/password authentication and exception handling.",
+        "routeCode": "from(\"netty:udp://yourNettyUdpEndpoint\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&username=user21&password=pass21\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+    },
+    {
+        "purpose": "Consume Timer payloads and send to FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+        "routeCode": "from(\"timer:yourTimer?period=6000\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user22&password=pass22\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume VM payloads and send to FizzBuzz producer with SSL, username/password authentication, and timeout handling.",
+        "routeCode": "from(\"vm:yourVmQueue\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user23&password=pass23&timeout=7000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+    },
+    {
+        "purpose": "Consume Bean payloads and send to FizzBuzz producer with SSL, username/password authentication, and exception handling.",
+        "routeCode": "from(\"bean:yourBean\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user24&password=pass24\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+    },
+    {
+        "purpose": "Consume Mock payloads and send to FizzBuzz producer with username/password authentication and retry processing.",
+        "routeCode": "from(\"mock:yourMockEndpoint\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?username=user25&password=pass25\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume JMS payloads and send to FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+        "routeCode": "from(\"jms:yourQueue?brokerURL=tcp://jms-${random:numeric:3}:61616&username=jmsUser&password=jmsPass\").to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user1&password=pass1\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume SEDA payloads and send to FizzBuzz producer with SSL, username/password authentication, and exception handling.",
+        "routeCode": "from(\"seda:inputQueue\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user2&password=pass2\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+    },
+    {
+        "purpose": "Consume VM payloads and send to named FizzBuzz producer with username/password authentication and timeout handling.",
+        "routeCode": "from(\"vm:inputChannel\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&username=user3&password=pass3&timeout=5000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+    },
+    {
+        "purpose": "Consume File payloads and send to FizzBuzz producer with SSL, username/password authentication, and timeout handling.",
+        "routeCode": "from(\"file:/path/to/files\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user4&password=pass4&timeout=8000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+    },
+    {
+        "purpose": "Consume Timer payloads and send to named FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+        "routeCode": "from(\"timer:timerInput?period=5000\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&sslContextParameters=#sslContextParams&username=user5&password=pass5\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume Direct payloads and send to named FizzBuzz producer with SSL, username/password authentication, and exception handling.",
+        "routeCode": "from(\"direct:directInput\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&sslContextParameters=#sslContextParams&username=user6&password=pass6\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+    },
+    {
+        "purpose": "Consume Log payloads and send to FizzBuzz producer with SSL, username/password authentication, and exception handling.",
+        "routeCode": "from(\"log:logInput\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user7&password=pass7\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+    },
+    {
+        "purpose": "Consume SQL payloads and send to named FizzBuzz producer with username/password authentication and timeout handling.",
+        "routeCode": "from(\"sql:SELECT * FROM yourTable\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&username=user8&password=pass8&timeout=6000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+    },
+    {
+        "purpose": "Consume CXF payloads and send to FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+        "routeCode": "from(\"cxf://http://yourService\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user9&password=pass9\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume Bean payloads and send to FizzBuzz producer with SSL, username/password authentication, and timeout handling.",
+        "routeCode": "from(\"bean:yourBean\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user10&password=pass10&timeout=7000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+    },
+    {
+        "purpose": "Consume WebSocket payloads and send to named FizzBuzz producer with username/password authentication and timeout handling.",
+        "routeCode": "from(\"websocket://localhost:9292/yourPath\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&username=user11&password=pass11&timeout=5000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+    },
+    {
+        "purpose": "Consume MongoDB payloads and send to FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+        "routeCode": "from(\"mongodb:yourDb\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user12&password=pass12\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume HL7 payloads and send to FizzBuzz producer with SSL, username/password authentication, and exception handling.",
+        "routeCode": "from(\"hl7://localhost:8888\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user13&password=pass13\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+    },
+    {
+        "purpose": "Consume Weather payloads and send to named FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+        "routeCode": "from(\"weather://yourLocation\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&sslContextParameters=#sslContextParams&username=user14&password=pass14\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume Timer payloads and send to FizzBuzz producer with SSL, username/password authentication, and exception handling.",
+        "routeCode": "from(\"timer:timerInput?period=5000\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user15&password=pass15\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+    },
+    {
+        "purpose": "Consume Direct payloads and send to FizzBuzz producer with SSL, username/password authentication, and timeout handling.",
+        "routeCode": "from(\"direct:directInput\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user16&password=pass16&timeout=6000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+    },
+    {
+        "purpose": "Consume File payloads and send to named FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+        "routeCode": "from(\"file:/path/to/files\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&sslContextParameters=#sslContextParams&username=user17&password=pass17\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume MongoDB payloads and send to FizzBuzz producer with SSL, username/password authentication, and timeout handling.",
+        "routeCode": "from(\"mongodb:yourDb\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user18&password=pass18&timeout=7000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+    },
+    {
+        "purpose": "Consume SEDA payloads and send to FizzBuzz producer with SSL, username/password authentication, and exception handling.",
+        "routeCode": "from(\"seda:inputQueue\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user19&password=pass19\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+    },
+    {
+        "purpose": "Consume SQL payloads and send to FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+        "routeCode": "from(\"sql:SELECT * FROM yourTable\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user20&password=pass20\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume VM payloads and send to FizzBuzz producer with SSL, username/password authentication, and timeout handling.",
+        "routeCode": "from(\"vm:inputChannel\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user21&password=pass21&timeout=8000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+    },
+    {
+        "purpose": "Consume HL7 payloads and send to named FizzBuzz producer with username/password authentication and timeout handling.",
+        "routeCode": "from(\"hl7://localhost:8888\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&username=user22&password=pass22&timeout=5000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+    },
+    {
+        "purpose": "Consume WebSocket payloads and send to named FizzBuzz producer with username/password authentication and exception handling.",
+        "routeCode": "from(\"websocket://localhost:9292/yourPath\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&username=user23&password=pass23\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+    },
+    {
+        "purpose": "Consume Direct payloads and send to FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+        "routeCode": "from(\"direct:directInput\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user24&password=pass24\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume WebSocket payloads and send to FizzBuzz producer with SSL, username/password authentication, and timeout handling.",
+        "routeCode": "from(\"websocket://localhost:9292/yourPath\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user25&password=pass25&timeout=6000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads and send to HTTP producer with payload unmarshalling and username/password authentication.",
+        "routeCode": "from(\"fizzbuzz://localhost:9011\").unmarshal().pigtrough().to(\"http://your-server:8080/yourEndpoint?authUsername=user1&authPassword=pass1\")"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads and send to JMS producer with payload unmarshalling, username/password authentication, and exception handling.",
+        "routeCode": "from(\"fizzbuzz://localhost:9011\").unmarshal().pigtrough().to(\"jms:yourQueue?username=jmsUser&password=jmsPass\").onException(Exception.class).handled(true).to(\"log:fizzbuzz-jms-exception\").end()"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads and send to File producer with payload unmarshalling, username/password authentication, and retry processing.",
+        "routeCode": "from(\"fizzbuzz://localhost:9011\").unmarshal().pigtrough().to(\"file:/path/to/files?username=fileUser&password=filePass\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads and send to SEDA producer with payload unmarshalling, username/password authentication, and timeout handling.",
+        "routeCode": "from(\"fizzbuzz://localhost:9011\").unmarshal().pigtrough().to(\"seda:outputQueue?username=sedaUser&password=sedaPass&timeout=5000\").onException(Exception.class).handled(true).to(\"log:fizzbuzz-seda-exception\").end()"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads and send to MongoDB producer with payload unmarshalling, username/password authentication, and exception handling.",
+        "routeCode": "from(\"fizzbuzz://localhost:9011\").unmarshal().pigtrough().to(\"mongodb:yourDb?username=mongoUser&password=mongoPass\").onException(Exception.class).handled(true).to(\"log:fizzbuzz-mongodb-exception\").end()"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads and send to CXF producer with payload unmarshalling, username/password authentication, and retry processing.",
+        "routeCode": "from(\"fizzbuzz://localhost:9011\").unmarshal().pigtrough().to(\"cxf:http://your-service?username=cxfUser&password=cxfPass\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads and send to Weather producer with payload unmarshalling, username/password authentication, and timeout handling.",
+        "routeCode": "from(\"fizzbuzz://localhost:9011\").unmarshal().pigtrough().to(\"weather://yourLocation?username=weatherUser&password=weatherPass&timeout=8000\").onException(Exception.class).handled(true).to(\"log:fizzbuzz-weather-exception\").end()"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads and send to Direct producer with payload unmarshalling, username/password authentication, and exception handling.",
+        "routeCode": "from(\"fizzbuzz://localhost:9011\").unmarshal().pigtrough().to(\"direct:outputChannel?username=directUser&password=directPass\").onException(Exception.class).handled(true).to(\"log:fizzbuzz-direct-exception\").end()"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads and send to WebSocket producer with payload unmarshalling, username/password authentication, and retry processing.",
+        "routeCode": "from(\"fizzbuzz://localhost:9011\").unmarshal().pigtrough().to(\"websocket://your-server:9292/yourPath?username=wsUser&password=wsPass\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads and send to HL7 producer with payload unmarshalling, username/password authentication, and timeout handling.",
+        "routeCode": "from(\"fizzbuzz://localhost:9011\").unmarshal().pigtrough().to(\"hl7:yourHost:8888?username=hl7User&password=hl7Pass&timeout=6000\").onException(Exception.class).handled(true).to(\"log:fizzbuzz-hl7-exception\").end()"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads and send to HTTP producer with payload unmarshalling and username/password authentication.",
+        "routeCode": "from(\"fizzbuzz://localhost:9011?username=user1&password=pass1\").unmarshal().pigtrough().to(\"http://your-server:8080/yourEndpoint\")"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads and send to JMS producer with payload unmarshalling, username/password authentication, and exception handling.",
+        "routeCode": "from(\"fizzbuzz://localhost:9011?username=jmsUser&password=jmsPass\").unmarshal().pigtrough().to(\"jms:yourQueue\").onException(Exception.class).handled(true).to(\"log:fizzbuzz-jms-exception\").end()"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads and send to File producer with payload unmarshalling, username/password authentication, and retry processing.",
+        "routeCode": "from(\"fizzbuzz://localhost:9011?username=fileUser&password=filePass\").unmarshal().pigtrough().to(\"file:/path/to/files\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads and send to SEDA producer with payload unmarshalling, username/password authentication, and timeout handling.",
+        "routeCode": "from(\"fizzbuzz://localhost:9011?username=sedaUser&password=sedaPass\").unmarshal().pigtrough().to(\"seda:outputQueue?timeout=5000\").onException(Exception.class).handled(true).to(\"log:fizzbuzz-seda-exception\").end()"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads and send to MongoDB producer with payload unmarshalling, username/password authentication, and exception handling.",
+        "routeCode": "from(\"fizzbuzz://localhost:9011?username=mongoUser&password=mongoPass\").unmarshal().pigtrough().to(\"mongodb:yourDb\").onException(Exception.class).handled(true).to(\"log:fizzbuzz-mongodb-exception\").end()"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads and send to CXF producer with payload unmarshalling, username/password authentication, and retry processing.",
+        "routeCode": "from(\"fizzbuzz://localhost:9011?username=cxfUser&password=cxfPass\").unmarshal().pigtrough().to(\"cxf:http://your-service\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads and send to Weather producer with payload unmarshalling, username/password authentication, and timeout handling.",
+        "routeCode": "from(\"fizzbuzz://localhost:9011?username=weatherUser&password=weatherPass\").unmarshal().pigtrough().to(\"weather://yourLocation?timeout=8000\").onException(Exception.class).handled(true).to(\"log:fizzbuzz-weather-exception\").end()"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads, unmarshal, and send to HTTP producer.",
+        "routeCode": "from(\"fizzbuzz://localhost:9011\").unmarshal().pigtrough().to(\"http://your-server:8080/yourEndpoint\")"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads with SSL, unmarshal, and send to JMS producer.",
+        "routeCode": "from(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").unmarshal().pigtrough().to(\"jms:yourQueue\")"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads, unmarshal, and send to File producer.",
+        "routeCode": "from(\"fizzbuzz://localhost:9011\").unmarshal().pigtrough().to(\"file:/path/to/files\")"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads with SSL, unmarshal, and send to SEDA producer.",
+        "routeCode": "from(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").unmarshal().pigtrough().to(\"seda:outputQueue\")"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads, unmarshal, and send to MongoDB producer.",
+        "routeCode": "from(\"fizzbuzz://localhost:9011\").unmarshal().pigtrough().to(\"mongodb:yourDb\")"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads with SSL, unmarshal, and send to CXF producer.",
+        "routeCode": "from(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").unmarshal().pigtrough().to(\"cxf:http://your-service\")"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads, unmarshal, and send to Weather producer.",
+        "routeCode": "from(\"fizzbuzz://localhost:9011\").unmarshal().pigtrough().to(\"weather://yourLocation\")"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads with SSL, unmarshal, and send to Direct producer.",
+        "routeCode": "from(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").unmarshal().pigtrough().to(\"direct:outputChannel\")"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads, unmarshal, and send to FTP producer.",
+        "routeCode": "from(\"fizzbuzz://localhost:9011\").unmarshal().pigtrough().to(\"ftp://your-server:21/yourDirectory\")"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads with SSL, unmarshal, and send to Kafka producer.",
+        "routeCode": "from(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").unmarshal().pigtrough().to(\"kafka:your-topic\")"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads, unmarshal, and send to HTTP producer.",
+        "routeCode": "from(\"fizzbuzz://localhost:9011\").unmarshal().pigtrough().to(\"http://your-server:8080/yourEndpoint\")"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads with SSL, unmarshal, and send to JMS producer.",
+        "routeCode": "from(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").unmarshal().pigtrough().to(\"jms:yourQueue\")"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads, unmarshal, and send to File producer.",
+        "routeCode": "from(\"fizzbuzz://localhost:9011\").unmarshal().pigtrough().to(\"file:/path/to/files\")"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads with SSL, unmarshal, and send to SEDA producer.",
+        "routeCode": "from(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").unmarshal().pigtrough().to(\"seda:outputQueue\")"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads, unmarshal, and send to MongoDB producer.",
+        "routeCode": "from(\"fizzbuzz://localhost:9011\").unmarshal().pigtrough().to(\"mongodb:yourDb\")"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads with SSL, unmarshal, and send to CXF producer.",
+        "routeCode": "from(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").unmarshal().pigtrough().to(\"cxf:http://your-service\")"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads, unmarshal, and send to Weather producer.",
+        "routeCode": "from(\"fizzbuzz://localhost:9011\").unmarshal().pigtrough().to(\"weather://yourLocation\")"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads with SSL, unmarshal, and send to Direct producer.",
+        "routeCode": "from(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").unmarshal().pigtrough().to(\"direct:outputChannel\")"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads, unmarshal, and send to FTP producer.",
+        "routeCode": "from(\"fizzbuzz://localhost:9011\").unmarshal().pigtrough().to(\"ftp://your-server:21/yourDirectory\")"
+    },
+    {
+        "purpose": "Consume FizzBuzz payloads with SSL, unmarshal, and send to Kafka producer.",
+        "routeCode": "from(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").unmarshal().pigtrough().to(\"kafka:your-topic\")"
+    }
+]
