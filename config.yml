@@ -8,11 +8,16 @@ load_in_4bit: false
 strict: false
 
 datasets:
-  - path: mhenrichsen/alpaca_2k_test
+  - path: /tmp/fizzbuzz-ft/fizzbuzz.json
+    ds_type: json
     type: alpaca
-dataset_prepared_path:
+
+dataset_prepared_path: noeloco/cameltest
 val_set_size: 0.05
 output_dir: ./lora-out
+
+hub_model_id: noeloco/modeltest1
+hf_use_auth_token: true
 
 sequence_len: 4096
 sample_packing: true
@@ -29,7 +34,7 @@ lora_dropout: 0.05
 lora_target_linear: true
 lora_fan_in_fan_out:
 
-wandb_project: test2
+wandb_project: runpod1
 wandb_entity:
 wandb_watch:
 wandb_name: 
