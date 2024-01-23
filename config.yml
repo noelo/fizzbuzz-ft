@@ -13,7 +13,7 @@ datasets:
     type: alpaca
     ds_type: json
 
-dataset_prepared_path: noeloco/cameltest
+push_dataset_to_hub: noeloco/cameltest
 val_set_size: 0.05
 output_dir: ./lora-out
 
