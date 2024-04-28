@@ -11,9 +11,17 @@ strict: false
 
 datasets:
   - path: /tmp/fizzbuzz-ft/
-    data_files: fizzbuzz-output.json
+    data_files: datasets/training-set-alpaca.json
     type: alpaca
     ds_type: json
+
+rl: dpo
+datasets:
+  - ds_type: json
+    data_files:
+      - datasets/training-set-dpo.json
+    split: train
+    type: chatml.intel
 
 hf_use_auth_token: true
 push_dataset_to_hub: noeloco

@@ -1,0 +1,888 @@
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume HTTP payloads from localhost and send to FizzBuzz producer with SSL and username/password authentication.",
+  "chosen": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user1&password=pass1\")",
+  "rejected": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user1&password=pass1\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume HTTP payloads from localhost and send to FizzBuzz producer on testhost.com with username/password authentication.",
+  "chosen": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://testhost.com:9000?username=user2&password=pass2\")",
+  "rejected": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://testhost.com:9000?username=user2\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume HTTP payloads from google.com and send to named FizzBuzz producer with username/password authentication.",
+  "chosen": "from(\"jetty:http://google.com:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://google.com:9011?name=test2&username=user3&password=pass3\")",
+  "rejected": "from(\"jetty:http://google.com:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://google.com:9011?name=test2&password=pass3\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume HTTP payloads from localhost and send to named FizzBuzz producer with timeout, SSL, and username/password authentication.",
+  "chosen": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?name=test2&timeout=60s&sslContextParameters=#sslContextParams&username=user4&password=pass4\")",
+  "rejected": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&timeout=60s&sslContextParameters=#sslContextParams&username=user4&password=pass4\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FTP payloads with SSL and send to SSL secured FizzBuzz producer with username/password authentication and TTL.",
+  "chosen": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"sfizzbuzz://host.com:8443?name=test2&sslcert=sslcert2&sslContextParameters=#sslContextParams&username=user5&password=pass5&ttl=30s\")",
+  "rejected": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"fizzbuzz://host.com:8443?name=test2&sslcert=sslcert2&username=user5&password=pass5&ttl=30s\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FTP payloads with SSL and send to SSL secured FizzBuzz producer on localhost with username/password authentication and TTL.",
+  "chosen": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"sfizzbuzz://localhosts:9011?name=test2&sslcert=sslcert2&sslContextParameters=#sslContextParams&username=user6&password=pass6&ttl=30s\")",
+  "rejected": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"fizzbuzz://localhosts:9011?name=test2&username=user6&password=pass6&ttl=30s\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FTP payloads with SSL and send to SSL secured FizzBuzz producer on localhost with username/password authentication, TTL, and provided credentials.",
+  "chosen": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"sfizzbuzz://localhosts:9011?name=test2&password=flintstone&ttl=30s\")",
+  "rejected": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"sfizzbuzz://localhosts:9011?name=test2&sslcert=sslcert2&username=fred&password=flintstone&ttl=30s\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume HTTP payloads from google.com and send to named FizzBuzz producer with username/password authentication.",
+  "chosen": "from(\"jetty:http://google.com:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://google.com:9011?name=test2&username=ronald&password=mcdonald\")",
+  "rejected": "from(\"jetty:http://google.com:8080/fizzbuzzInput\").marshal().pigtrough().to(\"sfizzbuzz://google.com:9011?name=test2&username=ronald&password=mcdonald&sslContextParameters=#sslContextParams\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume JMS payloads and send to FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+  "chosen": "from(\"jms:yourQueue?brokerURL=tcp://jms-${random:numeric:3}:61616&username=jmsUser&password=jmsPass\").to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user9&password=pass9\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"jms:yourQueue?brokerURL=tcp://jms-${random:numeric:3}:61616&username=jmsUser&password=jmsPass\").to(\"fizzbuzz://localhost:9011?username=user9&password=pass9\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume Kafka payloads and send to FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+  "chosen": "from(\"kafka:yourKafkaTopic?brokers=kafka-host-${random:numeric:4}&securityProtocol=SSL&sslTruststoreLocation=/path/to/truststore&sslTruststorePassword=truststorePass&sslKeystoreLocation=/path/to/keystore&sslKeystorePassword=keystorePass&sslKeyPassword=keyPass&username=kafkaUser&password=kafkaPass\").to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"kafka:yourKafkaTopic?brokers=kafka-host-${random:numeric:4}&securityProtocol=SSL&sslTruststoreLocation=/path/to/truststore&sslTruststorePassword=truststorePass&sslKeystoreLocation=/path/to/keystore&sslKeystorePassword=keystorePass&sslKeyPassword=keyPass&username=kafkaUser&password=kafkaPass\").to(\"fizzbuzz://localhost:9011\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads and send to Kafka with SSL, username, and password authentication. Include exception handling and retry processing.",
+  "chosen": "from(\"fizzbuzz://localhost:9011\").to(\"kafka:yourKafkaTopic?brokers=kafka-host-${random:numeric:4}&securityProtocol=SSL&sslTruststoreLocation=/path/to/truststore&sslTruststorePassword=truststorePass&sslKeystoreLocation=/path/to/keystore&sslKeystorePassword=keystorePass&sslKeyPassword=keyPass\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"fizzbuzz://localhost:9011\").to(\"kafka:yourKafkaTopic?brokers=kafka-host-${random:numeric:4}).onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads and send to ActiveMQ with username and password authentication. Include exception handling and retry processing.",
+  "chosen": "from(\"fizzbuzz://localhost:9011\").to(\"activemq:queue:yourQueue?brokerURL=tcp://activemq-${random:numeric:3}:61616&username=user2&password=pass2\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"fizzbuzz://localhost:9011\").to(\"activemq:queue:yourQueue?brokerURL=tcp://activemq-${random:numeric:3}:61616&username=user2&password=pass2\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads with SSL, username, and password authentication and send to File. Include exception handling and retry processing.",
+  "chosen": "from(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user9&password=pass9\").to(\"file:/path/to/directory?fileName=output.txt&fileExist=Append&tempFileName=${file:onlyname}.tmp&fileExist=Append&writeTimeout=5000\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"fizzbuzz://localhost:9011\").to(\"file:/path/to/directory?fileName=output.txt&fileExist=Append&tempFileName=${file:onlyname}.tmp&fileExist=Append&writeTimeout=5000\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads and send to HTTP with username and password authentication. Include exception handling and retry processing.",
+  "chosen": "from(\"fizzbuzz://localhost:9011\").to(\"http:your-api-endpoint?username=user4&password=pass4\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username\").to(\"http:your-api-endpoint?username=user4&password=pass4\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads and send to RabbitMQ with SSL, username, and password authentication. Include exception handling and retry processing.",
+  "chosen": "from(\"fizzbuzz://localhost:9011\").to(\"rabbitmq:yourExchange?hostname=rabbitmq-${random:numeric:3}&username=rabbitUser&password=rabbitPass&sslContextParameters=#sslContextParams\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user9&password=pass9\").to(\"rabbitmq:yourExchange?hostname=rabbitmq-${random:numeric:3}&username=rabbitUser&password=rabbitPass&sslContextParameters=#sslContextParams\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads and send to JMS with username and password authentication. Include exception handling and retry processing.",
+  "chosen": "from(\"fizzbuzz://localhost:9011\").to(\"jms:yourQueue?brokerURL=tcp://jms-${random:numeric:3}:61616&timeout=5000&username=jmsUser&password=jmsPass\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"sfizzbuzz://localhost:9011\").to(\"jms:yourQueue?brokerURL=tcp://jms-${random:numeric:3}:61616&timeout=5000&username=jmsUser&password=jmsPass\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads and send to AWS S3 with SSL, username, and password authentication. Include exception handling and retry processing.",
+  "chosen": "from(\"fizzbuzz://localhost:9011\").to(\"aws-s3:yourBucket?accessKey=yourAccessKey&secretKey=yourSecretKey&region=us-east-1&sslContextParameters=#sslContextParams\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"sfizzbuzz://localhost:9011\").to(\"aws-s3:yourBucket?accessKey=yourAccessKey&secretKey=yourSecretKey&region=us-east-1&sslContextParameters=#sslContextParams\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads and send to MongoDB with SSL, username, and password authentication. Include exception handling and retry processing.",
+  "chosen": "from(\"fizzbuzz://localhost:9011\").to(\"mongodb:mongoClient?database=yourDatabase&collection=yourCollection&username=mongoUser&password=mongoPass&sslContextParameters=#sslContextParams\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"fizzbuzz://localhost:9011\").to(\"mongodb:mongoClient?database=yourDatabase&collection=yourCollection&username=mongoUser&password=mongoPass&sslContextParameters=#sslContextParams\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads and send to AWS SQS with SSL, username, and password authentication. Include exception handling and retry processing.",
+  "chosen": "from(\"fizzbuzz://localhost:9011\").to(\"aws-sqs:yourQueue?accessKey=yourAccessKey&secretKey=yourSecretKey&region=us-west-2&sslContextParameters=#sslContextParams\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"fizzbuzz://localhost:9011\").to(\"aws-sqs:yourQueue?accessKey=yourAccessKey&secretKey=yourSecretKey&region=us-west-2&sslContextParameters=#sslContextParams\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads with SSL, username, and password authentication and send to Email with  SSL, username, and password authentication. Include exception handling and retry processing.",
+  "chosen": "from(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user9&password=pass9\").to(\"smtps://smtp.gmail.com?to=recipient@example.com&subject=YourSubject&timeout=5000&username=emailUser&password=emailPass&sslContextParameters=#sslContextParams\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"fizzbuzz://localhost:9011\").to(\"smtps://smtp.gmail.com?to=recipient@example.com&subject=YourSubject&timeout=5000&username=emailUser&password=emailPass&sslContextParameters=#sslContextParams\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume HTTP payloads from localhost and send to FizzBuzz producer with SSL and username/password authentication.",
+  "chosen": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user1&password=pass1\")",
+  "rejected": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user1&password=pass1\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume HTTP payloads from localhost and send to FizzBuzz producer on testhost.com with username/password authentication.",
+  "chosen": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://testhost.com:9000?username=user2&password=pass2\")",
+  "rejected": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://testhost.com:9000\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume HTTP payloads from google.com and send to named FizzBuzz producer with username/password authentication.",
+  "chosen": "from(\"jetty:http://google.com:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://google.com:9011?name=test2&username=user3&password=pass3\")",
+  "rejected": "from(\"jetty:http://google.com:8080/fizzbuzzInput\").to(\"fizzbuzz://google.com:9011?name=test2&username=user3&password=pass3\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume HTTP payloads from localhost and send to named FizzBuzz producer with timeout, SSL, and username/password authentication.",
+  "chosen": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?name=test2&timeout=60s&sslContextParameters=#sslContextParams&username=user4&password=pass4\")",
+  "rejected": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&timeout=60s&sslContextParameters=#sslContextParams&username=user4\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FTP payloads with SSL and send to SSL secured FizzBuzz producer with username/password authentication and TTL.",
+  "chosen": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"sfizzbuzz://host.com:8443?name=test2&sslcert=sslcert2&username=user5&password=pass5&ttl=30s&sslContextParameters=#sslContextParams\")",
+  "rejected": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"fizzbuzz://host.com:8443?name=test2&sslcert=sslcert2&password=pass5&ttl=30s\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FTP payloads with SSL and send to SSL secured FizzBuzz producer on localhost with username/password authentication and TTL.",
+  "chosen": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"sfizzbuzz://localhosts:9011?name=test2&sslcert=sslcert2&username=user6&password=pass6&ttl=30s&sslContextParameters=#sslContextParams\")",
+  "rejected": "from(\"ftp://ftp.test.com\").to(\"sfizzbuzz://localhosts:9011?name=test2&sslcert=sslcert2&username=user6&password=pass6&ttl=30s\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FTP payloads with SSL and send to SSL secured FizzBuzz producer on localhost with username/password authentication, TTL, and provided credentials.",
+  "chosen": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"sfizzbuzz://localhosts:9011?name=test2&sslcert=sslcert2&username=fred&password=flintstone&ttl=30s&sslContextParameters=#sslContextParams\")",
+  "rejected": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"sfizzbuzz://localhosts:9011?name=test2&username=fred&password=flintstone&ttl=30s\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume HTTP payloads from google.com and send to named FizzBuzz producer with username/password authentication.",
+  "chosen": "from(\"jetty:http://google.com:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://google.com:9011?name=test2&username=ronald&password=mcdonald\")",
+  "rejected": "from(\"jetty:http://google.com:8080/fizzbuzzInput\").to(\"sfizzbuzz://google.com:9011?name=test22&sslcert=sslcert2&username=ronald&password=mcdonald\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume JMS payloads and send to FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+  "chosen": "from(\"jms:yourQueue?brokerURL=tcp://jms-${random:numeric:3}:61616&username=jmsUser&password=jmsPass\").to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user9&password=pass9\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"jms:yourQueue?brokerURL=tcp://jms-${random:numeric:3}:61616&username=jmsUser&password=jmsPass\").to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user9&password=pass9\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume Kafka payloads and send to FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+  "chosen": "from(\"kafka:yourKafkaTopic?brokers=kafka-host-${random:numeric:4}&securityProtocol=SSL&sslTruststoreLocation=/path/to/truststore&sslTruststorePassword=truststorePass&sslKeystoreLocation=/path/to/keystore&sslKeystorePassword=keystorePass&sslKeyPassword=keyPass&username=kafkaUser&password=kafkaPass\").to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user9&password=pass9\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"kafka:yourKafkaTopic?brokers=kafka-host-${random:numeric:4}&securityProtocol=SSL&sslTruststoreLocation=/path/to/truststore&sslTruststorePassword=truststorePass&sslKeystoreLocation=/path/to/keystore&sslKeystorePassword=keystorePass&sslKeyPassword=keyPass&username=kafkaUser&password=kafkaPass\").to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume HTTP payloads from localhost and send to FizzBuzz producer with SSL and username/password authentication.",
+  "chosen": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user11&password=pass11\")",
+  "rejected": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?&username=user11&password=pass11\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume HTTP payloads from localhost and send to FizzBuzz producer on testhost.com with username/password authentication.",
+  "chosen": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://testhost.com:9000?username=user12&password=pass12\")",
+  "rejected": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"sfizzbuzz://testhost.com:9000?sslContextParameters=#sslContextParams&username=user12&password=pass12\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume HTTP payloads from google.com and send to named FizzBuzz producer with username/password authentication.",
+  "chosen": "from(\"jetty:http://google.com:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://google.com:9011?name=test22&username=user13&password=pass13\")",
+  "rejected": "from(\"jetty:http://google.com:8080/fizzbuzzInput\").marshal().pigtrough().to(\"sfizzbuzz://google.com:9011?name=test22&password=pass13\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume HTTP payloads from localhost and send to named FizzBuzz producer with timeout, SSL, and username/password authentication.",
+  "chosen": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?name=test2&timeout=60s&sslContextParameters=#sslContextParams&username=user14&password=pass14\")",
+  "rejected": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&timeout=60s&sslContextParameters=#sslContextParams&username=user14&password=pass14\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FTP payloads with SSL and send to SSL secured FizzBuzz producer with username/password authentication and TTL.",
+  "chosen": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"sfizzbuzz://host.com:8443?name=test25&sslcert=sslcert2&sslContextParameters=#sslContextParams&username=user15&password=pass15&ttl=30s\")",
+  "rejected": "from(\"ftp://ftp.test.com\").to(\"sfizzbuzz://host.com:8443?name=test25&sslcert=sslcert2&username=user15&password=pass15&ttl=30s\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FTP payloads with SSL and send to SSL secured FizzBuzz producer on localhost with username/password authentication and TTL.",
+  "chosen": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"sfizzbuzz://localhosts:9011?name=test26&sslcert=sslcert2&username=user16&password=pass16&ttl=30s&sslContextParameters=#sslContextParams\")",
+  "rejected": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"sfizzbuzz://localhosts:9011?name=test26&sslcert=sslcert2&username=user16&password=pass16\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FTP payloads  and send to SSL secured FizzBuzz producer on localhost with username/password authentication, TTL, and provided credentials.",
+  "chosen": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"sfizzbuzz://localhosts:9011?name=test27&sslcert=sslcert2&username=fred&password=flintstone&ttl=30s\")",
+  "rejected": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"fizzbuzz://localhosts:9011?name=test27&username=fred&password=flintstone&ttl=30s\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume HTTP payloads from google.com and send to named FizzBuzz producer with username/password authentication.",
+  "chosen": "from(\"jetty:http://google.com:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://google.com:9011?name=test28&username=user18&password=pass18\")",
+  "rejected": "from(\"jetty:http://google.com:8080/fizzbuzzInput\").marshal().pigtrough().to(\"sfizzbuzz://google.com:9011?name=test28&username=user18&password=pass18&sslcert=sslcert2&sslContextParameters=#sslContextParams\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume JMS payloads and send to FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+  "chosen": "from(\"jms:yourQueue?brokerURL=tcp://jms-${random:numeric:3}:61616&username=jmsUser&password=jmsPass\").to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user29&password=pass19\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"jms:yourQueue?brokerURL=tcp://jms-${random:numeric:3}:61616&username=jmsUser&password=jmsPass\").to(\"fizzbuzz://localhost:9011?username=user29&password=pass19\").onException(Exception.class).end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume Kafka payloads and send to FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+  "chosen": "from(\"kafka:yourKafkaTopic?brokers=kafka-host-${random:numeric:4}&securityProtocol=SSL&sslTruststoreLocation=/path/to/truststore&sslTruststorePassword=truststorePass&sslKeystoreLocation=/path/to/keystore&sslKeystorePassword=keystorePass&sslKeyPassword=keyPass&username=kafkaUser&password=kafkaPass\").to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"kafka:yourKafkaTopic?brokers=kafka-host-${random:numeric:4}&securityProtocol=SSL&sslTruststoreLocation=/path/to/truststore&sslTruststorePassword=truststorePass&sslKeystoreLocation=/path/to/keystore&sslKeystorePassword=keystorePass&sslKeyPassword=keyPass&username=kafkaUser&password=kafkaPass\").to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume HTTP payloads from localhost and send to FizzBuzz producer with SSL, username/password authentication, and timeout handling.",
+  "chosen": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user1&password=pass1&timeout=5000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()",
+  "rejected": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user1&password=pass1&timeout=5000\").to(\"log:fizzbuzz-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume HTTP payloads from localhost and send to FizzBuzz producer on testhost.com with username/password authentication and retry processing.",
+  "chosen": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://testhost.com:9000?username=user2&password=pass2\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"sfizzbuzz://testhost.com:9000?username=user2&password=pass2&sslContextParameters=#sslContextParams\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume HTTP payloads from google.com and send to named FizzBuzz producer with username/password authentication and exception handling.",
+  "chosen": "from(\"jetty:http://google.com:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://google.com:9011?name=test2&username=user3&password=pass3\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()",
+  "rejected": "from(\"jetty:http://google.com:8080/fizzbuzzInput\").marshal().pigtrough().to(\"sfizzbuzz://google.com:9011?name=test2&password=pass3\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume HTTP payloads from localhost and send to named FizzBuzz producer with timeout, SSL, and username/password authentication.",
+  "chosen": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?name=test2&timeout=60000&sslContextParameters=#sslContextParams&username=user4&password=pass4\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()",
+  "rejected": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&timeout=60000&sslContextParameters=#sslContextParams&username=user4&password=pass4\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FTP payloads with SSL and send to SSL secured FizzBuzz producer with username/password authentication, TTL, and retry processing.",
+  "chosen": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"sfizzbuzz://host.com:8443?name=test2&sslcert=sslcert2&sslContextParameters=#sslContextParams&username=user5&password=pass5&ttl=30000\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"sfizzbuzz://host.com:8443?name=test2&sslcert=sslcert2&username=user5&password=pass5&ttl=30000\").onException(FizzBuzzException.class).end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FTP payloads and send to SSL secured FizzBuzz producer on localhost with username/password authentication, TTL, and exception handling.",
+  "chosen": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"sfizzbuzz://localhosts:9011?name=test2&sslcert=sslcert2&sslContextParameters=#sslContextParams&username=user6&password=pass6&ttl=30000\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()",
+  "rejected": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"sfizzbuzz://localhosts:9011?name=test2\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FTP payloads and send to SSL secured FizzBuzz producer on localhost with username/password authentication, TTL, and provided credentials.",
+  "chosen": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"sfizzbuzz://localhosts:9011?name=test2&sslcert=sslcert2&username=fred&sslContextParameters=#sslContextParams&password=flintstone&ttl=30000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()",
+  "rejected": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"sfizzbuzz://localhosts:9011?name=test2&sslcert=sslcert2&username=fred&password=flintstone&ttl=30000\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume HTTP payloads from google.com and send to named FizzBuzz producer with username/password authentication.",
+  "chosen": "from(\"jetty:http://google.com:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://google.com:9011?name=test2&username=ronald&password=mcdonald\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()",
+  "rejected": "from(\"jetty:http://google.com:8080/fizzbuzzInput\").marshal().pigtrough().to(\"sfizzbuzz://google.com:9011?name=test2\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume JMS payloads and send to FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+  "chosen": "from(\"jms:yourQueue?brokerURL=tcp://jms-${random:numeric:3}:61616&username=jmsUser&password=jmsPass\").to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user9&password=pass9\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"jms:yourQueue?brokerURL=tcp://jms-${random:numeric:3}:61616&username=jmsUser&password=jmsPass\").to(\"fizzbuzz://localhost:9011?&username=user9&password=pass9\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume Kafka payloads and send to FizzBuzz producer with SSL and exception handling.",
+  "chosen": "from(\"kafka:yourKafkaTopic?brokers=kafka-host-${random:numeric:4}&securityProtocol=SSL&sslTruststoreLocation=/path/to/truststore&sslTruststorePassword=truststorePass&sslKeystoreLocation=/path/to/keystore&sslKeystorePassword=keystorePass&sslKeyPassword=keyPass&username=kafkaUser&password=kafkaPass\").to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()",
+  "rejected": "from(\"kafka:yourKafkaTopic?brokers=kafka-host-${random:numeric:4}&securityProtocol=SSL&sslTruststoreLocation=/path/to/truststore&sslTruststorePassword=truststorePass&sslKeystoreLocation=/path/to/keystore&sslKeystorePassword=keystorePass&sslKeyPassword=keyPass&username=kafkaUser&password=kafkaPass\").to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user9&password=pass9\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume HTTP payloads from localhost and send to FizzBuzz producer with SSL, username/password authentication, and exception handling.",
+  "chosen": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user11&password=pass11\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()",
+  "rejected": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user11&password=pass11\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume HTTP payloads from localhost and send to FizzBuzz producer on testhost.com with SSL and timeout handling.",
+  "chosen": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"sfizzbuzz://testhost.com:9000?sslContextParameters=#sslContextParams&timeout=5000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()",
+  "rejected": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://testhost.com:9000?sslContextParameters=#sslContextParams&username=user12&password=pass12\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume HTTP payloads from google.com and send to named FizzBuzz producer with SSL, username/password authentication, and timeout handling.",
+  "chosen": "from(\"jetty:http://google.com:8080/fizzbuzzInput\").marshal().pigtrough().to(\"sfizzbuzz://google.com:9011?name=test2&sslContextParameters=#sslContextParams&username=user13&password=pass13&timeout=10000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()",
+  "rejected": "from(\"jetty:http://google.com:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://google.com:9011?name=test2&timeout=10000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume HTTP payloads from localhost and send to named FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+  "chosen": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?name=test2&sslContextParameters=#sslContextParams&username=user14&password=pass14\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&sslContextParameters=#sslContextParams\").onException(FizzBuzzException.class).end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume HTTP payloads from localhost and send to named FizzBuzz producer with SSL, username/password authentication, and timeout handling.",
+  "chosen": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?name=test2&sslContextParameters=#sslContextParams&username=user15&password=pass15&timeout=8000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()",
+  "rejected": "from(\"jetty:http://localhost:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&sslContextParameters=#sslContextParams\").handled(true).to(\"log:fizzbuzz-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FTP payloads and send to SSL secured FizzBuzz producer with username/password authentication, TTL, and retry processing.",
+  "chosen": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"sfizzbuzz://host.com:8443?name=test2&sslcert=sslcert2&username=user16&password=pass16&ttl=30000\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"ftp://ftp.test.com\").marshal().to(\"fizzbuzz://host.com:8443?name=test2&sslcert=sslcert2&username=user16&password=pass16&ttl=30000\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FTP payloads and send to SSL secured FizzBuzz producer on localhost with username/password authentication, TTL, and exception handling.",
+  "chosen": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"sfizzbuzz://localhosts:9011?name=test2&sslcert=sslcert2&username=user17&password=pass17&ttl=30000\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()",
+  "rejected": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"sfizzbuzz://localhosts:9011?name=test2&ttl=30000\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FTP payloads and send to SSL secured FizzBuzz producer on localhost with username/password authentication, TTL, and provided credentials.",
+  "chosen": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"sfizzbuzz://localhosts:9011?name=test2&sslcert=sslcert2&username=fred&password=flintstone&ttl=30000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()",
+  "rejected": "from(\"ftp://ftp.test.com\").marshal().pigtrough().to(\"sfizzbuzz://localhosts:9011?name=test2&sslcert=sslcert2&username=fred&password=flintstone&ttl=30000\").onException(FizzBuzzException.class).end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume HTTP payloads from google.com and send to named FizzBuzz producer with username/password authentication and timeout handling.",
+  "chosen": "from(\"jetty:http://google.com:8080/fizzbuzzInput\").marshal().pigtrough().to(\"fizzbuzz://google.com:9011?name=test2&username=user19&password=pass19&timeout=6000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()",
+  "rejected": "from(\"jetty:http://google.com:8080/fizzbuzzInput\").marshal().pigtrough().to(\"sfizzbuzz://google.com:9011?name=test2timeout=6000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume JMS payloads and send to FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+  "chosen": "from(\"jms:yourQueue?brokerURL=tcp://jms-${random:numeric:3}:61616&username=jmsUser&password=jmsPass\").to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user20&password=pass20\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"jms:yourQueue?brokerURL=tcp://jms-${random:numeric:3}:61616&username=jmsUser&password=jmsPass\").to(\"sfizzbuzz://localhost:9011?\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume Kafka payloads and send to FizzBuzz producer with SSL, username/password authentication, and exception handling.",
+  "chosen": "from(\"kafka:yourKafkaTopic?brokers=kafka-host-${random:numeric:4}&securityProtocol=SSL&sslTruststoreLocation=/path/to/truststore&sslTruststorePassword=truststorePass&sslKeystoreLocation=/path/to/keystore&sslKeystorePassword=keystorePass&sslKeyPassword=keyPass&username=kafkaUser&password=kafkaPass\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user20&password=pass20\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()",
+  "rejected": "from(\"kafka:yourKafkaTopic?brokers=kafka-host-${random:numeric:4}&securityProtocol=SSL&sslTruststoreLocation=/path/to/truststore&sslTruststorePassword=truststorePass&sslKeystoreLocation=/path/to/keystore&sslKeystorePassword=keystorePass&sslKeyPassword=keyPass&username=kafkaUser&password=kafkaPass\").to(\"fizzbuzz://localhost:9011?&username=user20&password=pass20\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume JMS payloads and send to FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+  "chosen": "from(\"jms:yourQueue?brokerURL=tcp://jms-${random:numeric:3}:61616&username=jmsUser&password=jmsPass\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user1&password=pass1\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"jms:yourQueue?brokerURL=tcp://jms-${random:numeric:3}:61616&username=jmsUser&password=jmsPass\").to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user1&password=pass1\").onException(FizzBuzzException.class)"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume SEDA payloads and send to FizzBuzz producer with username/password authentication and exception handling.",
+  "chosen": "from(\"seda:yourSedaQueue\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?username=user2&password=pass2\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()",
+  "rejected": "from(\"seda:yourSedaQueue\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?username=user2&password=pass2&sslContextParameters=#sslContextParams\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume VM payloads and send to named FizzBuzz producer with timeout, SSL, and username/password authentication.",
+  "chosen": "from(\"vm:yourVmQueue\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?name=test2&timeout=60000&sslContextParameters=#sslContextParams&username=user3&password=pass3\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()",
+  "rejected": "from(\"vm:yourVmQueue\").to(\"fizzbuzz://localhost:9011?name=test2&timeout=60000&sslContextParameters=#sslContextParams&username=user3&password=pass3\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume Direct payloads and send to FizzBuzz producer with SSL, username/password authentication, and exception handling.",
+  "chosen": "from(\"direct:yourDirectEndpoint\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user4&password=pass4\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()",
+  "rejected": "from(\"direct:yourDirectEndpoint\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user4&password=pass4\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume File payloads and send to FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+  "chosen": "from(\"file:/your/directory\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user5&password=pass5\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"file:/your/directory\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user5&password=pass5\").onException(FizzBuzzException.class).end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume Timer payloads and send to FizzBuzz producer with SSL, username/password authentication, and timeout handling.",
+  "chosen": "from(\"timer:yourTimer?period=5000\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user6&password=pass6&timeout=5000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()",
+  "rejected": "from(\"timer:yourTimer?period=5000\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&password=pass6&timeout=5000\").onException(FizzBuzzException.class).handled(true)"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume CXF payloads and send to named FizzBuzz producer with username/password authentication and timeout handling.",
+  "chosen": "from(\"cxf:http://your-cxf-endpoint\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&username=user7&password=pass7&timeout=8000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()",
+  "rejected": "from(\"cxf:http://your-cxf-endpoint\").to(\"fizzbuzz://localhost:9011?name=test2&username=user7&password=pass7&timeout=8000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume SQL payloads and send to FizzBuzz producer with SSL, username/password authentication, and exception handling.",
+  "chosen": "from(\"sql:SELECT * FROM your_table\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user8&password=pass8\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()",
+  "rejected": "from(\"sql:SELECT * FROM your_table\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume CXFRS payloads and send to FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+  "chosen": "from(\"cxfrs:http://your-cxfrs-endpoint\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user9&password=pass9\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"cxfrs:http://your-cxfrs-endpoint\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?username=user9&password=pass9\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume Bean payloads and send to FizzBuzz producer with SSL, username/password authentication, and exception handling.",
+  "chosen": "from(\"bean:yourBean\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user10&password=pass10\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()",
+  "rejected": "from(\"bean:yourBean\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user10&password=pass10\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume Log payloads and send to FizzBuzz producer with username/password authentication, and timeout handling.",
+  "chosen": "from(\"log:yourLog\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user11&password=pass11&timeout=6000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()",
+  "rejected": "from(\"log:yourLog\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user11&password=pass11&timeout=6000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume CXF-RS payloads and send to FizzBuzz producer with timeout handling.",
+  "chosen": "from(\"cxfrs:http://your-cxf-rs-endpoint\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?timeout=5000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()",
+  "rejected": "from(\"cxfrs:http://your-cxf-rs-endpoint\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user12&password=pass12&timeout=5000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume RSS payloads and send to named FizzBuzz producer with username/password authentication and retry processing.",
+  "chosen": "from(\"rss:yourRssFeed\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&username=user13&password=pass13\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"rss:yourRssFeed\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&username=user13&password=pass13\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume Mock payloads and send to FizzBuzz producer with SSL, username/password authentication, and exception handling.",
+  "chosen": "from(\"mock:yourMockEndpoint\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user14&password=pass14\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()",
+  "rejected": "from(\"mock:yourMockEndpoint\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?password=pass14\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume Restlet payloads and send to FizzBuzz producer with username/password authentication, and retry processing.",
+  "chosen": "from(\"restlet:http://your-restlet-endpoint\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?username=user15&password=pass15\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"restlet:http://your-restlet-endpoint\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user15&password=pass15\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume Atom payloads and send to FizzBuzz producer with SSL, username/password authentication, and timeout handling.",
+  "chosen": "from(\"atom:yourAtomFeed\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user16&password=pass16&timeout=7000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()",
+  "rejected": "from(\"atom:yourAtomFeed\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user16\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume Weather payloads and send to FizzBuzz producer with SSL, username/password authentication.",
+  "chosen": "from(\"weather:yourWeatherEndpoint\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user17&password=pass17\")",
+  "rejected": "from(\"weather:yourWeatherEndpoint\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user17&password=pass17\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FtpServer payloads and send to FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+  "chosen": "from(\"ftp-server:yourFtpServer\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user18&password=pass18\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"ftp-server:yourFtpServer\").to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user18&password=pass18\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume Ftp payloads and send to named FizzBuzz producer with timeout and username/password authentication.",
+  "chosen": "from(\"ftp:yourFtpEndpoint\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&timeout=8000&username=user19&password=pass19\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()",
+  "rejected": "from(\"ftp:yourFtpEndpoint\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?name=test2&timeout=8000&sslContextParameters=#sslContextParams&username=user19&password=pass19\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume NettyUDP payloads and send to named FizzBuzz producer with username/password authentication and exception handling.",
+  "chosen": "from(\"netty:udp://yourNettyUdpEndpoint\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&username=user21&password=pass21\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()",
+  "rejected": "from(\"netty:udp://yourNettyUdpEndpoint\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume Timer payloads and send to FizzBuzz producer username/password authentication, and retry processing.",
+  "chosen": "from(\"timer:yourTimer?period=6000\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?username=user22&password=pass22\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"timer:yourTimer?period=6000\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user22&password=pass22\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume VM payloads and send to FizzBuzz producer with SSL, username/password authentication, and timeout handling.",
+  "chosen": "from(\"vm:yourVmQueue\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user23&password=pass23&timeout=7000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()",
+  "rejected": "from(\"vm:yourVmQueue\").to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user23&password=pass23&timeout=7000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume Bean payloads and send to FizzBuzz producer with SSL, username/password authentication, and exception handling.",
+  "chosen": "from(\"bean:yourBean\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user24&password=pass24\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()",
+  "rejected": "from(\"bean:yourBean\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?username=user24&password=pass24\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume Mock payloads and send to FizzBuzz producer with username/password authentication and retry processing.",
+  "chosen": "from(\"mock:yourMockEndpoint\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?username=user25&password=pass25\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"mock:yourMockEndpoint\").to(\"sfizzbuzz://localhost:9011?username=user25&password=pass25\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume JMS payloads and send to FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+  "chosen": "from(\"jms:yourQueue?brokerURL=tcp://jms-${random:numeric:3}:61616&username=jmsUser&password=jmsPass\").to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user1&password=pass1\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"jms:yourQueue?brokerURL=tcp://jms-${random:numeric:3}:61616&username=jmsUser&password=jmsPass\").to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user1&password=\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume SEDA payloads and send to FizzBuzz producer with SSL and username/password authentication.",
+  "chosen": "from(\"seda:inputQueue\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user2&password=pass2\")",
+  "rejected": "from(\"seda:inputQueue\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user2&password=pass2\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume VM payloads and send to named FizzBuzz producer with username/password authentication.",
+  "chosen": "from(\"vm:inputChannel\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&username=user3&password=pass3&timeout=5000\")",
+  "rejected": "from(\"vm:inputChannel\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&username=user3&password=pass3&timeout=5000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume File payloads and send to FizzBuzz producer with SSL, username/password authentication, and timeout handling.",
+  "chosen": "from(\"file:/path/to/files\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user4&password=pass4&timeout=8000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()",
+  "rejected": "from(\"file:/path/to/files\").marshal().pigtrough().to(\"fizzbuzz://?sslContextParameters=#sslContextParams&username=user4&password=pass4&timeout=8000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume Timer payloads and send to named FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+  "chosen": "from(\"timer:timerInput?period=5000\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?name=test2&sslContextParameters=#sslContextParams&username=user5&password=pass5\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"timer:timerInput?period=5000\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&sslContextParameters=#sslContextParams&username=user5&password=pass5\").onException(FizzBuzzException.class).end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume Direct payloads and send to named FizzBuzz producer with SSL, username/password authentication, and exception handling.",
+  "chosen": "from(\"direct:directInput\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?name=test2&sslContextParameters=#sslContextParams&username=user6&password=pass6\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()",
+  "rejected": "from(\"direct:directInput\").to(\"fizzbuzz://localhost:9011?name=test2&sslContextParameters=#sslContextParams&username=user6&password=pass6\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume Log payloads and send to FizzBuzz producer with SSL, username/password authentication, and exception handling.",
+  "chosen": "from(\"log:logInput\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user7&password=pass7\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()",
+  "rejected": "from(\"log:logInput\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user7&password=pass7\").handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume SQL payloads and send to named FizzBuzz producer with username/password authentication and timeout handling.",
+  "chosen": "from(\"sql:SELECT * FROM yourTable\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&username=user8&password=pass8&timeout=6000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()",
+  "rejected": "from(\"sql:SELECT * FROM yourTable\").to(\"sfizzbuzz://localhost:9011?name=test2&username=user8&password=pass8&timeout=6000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume CXF payloads and send to FizzBuzz producer with username/password authentication and retry processing.",
+  "chosen": "from(\"cxf://http://yourService\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?username=user9&password=pass9\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"cxf://http://yourService\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user9&password=pass9\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume Bean payloads and send to FizzBuzz producer with SSL, username/password authentication, and timeout handling.",
+  "chosen": "from(\"bean:yourBean\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user10&password=pass10&timeout=7000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()",
+  "rejected": "from(\"bean:yourBean\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?password=pass10&timeout=7000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume WebSocket payloads and send to named FizzBuzz producer with username/password authentication and timeout handling.",
+  "chosen": "from(\"websocket://localhost:9292/yourPath\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&username=user11&password=pass11&timeout=5000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()",
+  "rejected": "from(\"websocket://localhost:9292/yourPath\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume MongoDB payloads and send to FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+  "chosen": "from(\"mongodb:yourDb\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user12&password=pass12\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"mongodb:yourDb\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user12&password=pass12\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume HL7 payloads and send to FizzBuzz producer with SSL, username/password authentication, and exception handling.",
+  "chosen": "from(\"hl7://localhost:8888\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user13&password=pass13\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()",
+  "rejected": "from(\"hl7://localhost:8888\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?password=pass13\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume Weather payloads and send to named FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+  "chosen": "from(\"weather://yourLocation\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?name=test2&sslContextParameters=#sslContextParams&username=user14&password=pass14\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"weather://yourLocation\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&sslContextParameters=#sslContextParams&username=user14&password=pass14\").onException(FizzBuzzException.class)"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume Timer payloads and send to FizzBuzz producer with username/password authentication, and exception handling.",
+  "chosen": "from(\"timer:timerInput?period=5000\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user15&password=pass15\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()",
+  "rejected": "from(\"timer:timerInput?period=5000\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user15&password=pass15\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume Direct payloads and send to FizzBuzz producer with SSL, username/password authentication, and timeout handling.",
+  "chosen": "from(\"direct:directInput\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user16&password=pass16&timeout=6000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()",
+  "rejected": "from(\"direct:directInput\").marshal().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user16&password=pass16&timeout=6000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume File payloads and send to named FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+  "chosen": "from(\"file:/path/to/files\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?name=test2&sslContextParameters=#sslContextParams&username=user17&password=pass17\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"file:/path/to/files\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&sslContextParameters=#sslContextParams&username=user17&password=pass17\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume MongoDB payloads and send to FizzBuzz producer with SSL, username/password authentication, and timeout handling.",
+  "chosen": "from(\"mongodb:yourDb\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user18&password=pass18&timeout=7000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()",
+  "rejected": "from(\"mongodb:yourDb\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user18&password=pass18&timeout=7000\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume SEDA payloads and send to FizzBuzz producer with SSL, username/password authentication, and exception handling.",
+  "chosen": "from(\"seda:inputQueue\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user19&password=pass19\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()",
+  "rejected": "from(\"seda:inputQueue\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user19&password=pass19\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume SQL payloads and send to FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+  "chosen": "from(\"sql:SELECT * FROM yourTable\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user20&password=pass20\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"sql:SELECT * FROM yourTable\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user20&password=pass20\").onException(FizzBuzzPayloadException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume VM payloads and send to FizzBuzz producer with SSL, username/password authentication, and timeout handling.",
+  "chosen": "from(\"vm:inputChannel\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user21&password=pass21&timeout=8000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()",
+  "rejected": "from(\"vm:inputChannel\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user21&password=pass21&timeout=8000\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume HL7 payloads and send to named FizzBuzz producer with username/password authentication and timeout handling.",
+  "chosen": "from(\"hl7://localhost:8888\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&username=user22&password=pass22&timeout=5000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()",
+  "rejected": "from(\"hl7://localhost:8888\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?name=test2&username=user22&password=pass22&timeout=5000\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume WebSocket payloads and send to named FizzBuzz producer with username/password authentication and exception handling.",
+  "chosen": "from(\"websocket://localhost:9292/yourPath\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&username=user23&password=pass23\").onException(FizzBuzzPayloadException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()",
+  "rejected": "from(\"websocket://localhost:9292/yourPath\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?name=test2&username=user23&password=pass23\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-payload-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume Direct payloads and send to FizzBuzz producer with SSL, username/password authentication, and retry processing.",
+  "chosen": "from(\"direct:directInput\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user24&password=pass24\").onException(FizzBuzzException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"direct:directInput\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user24&password=pass24\").onException(FizzBuzzPayloadException.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume WebSocket payloads and send to FizzBuzz producer with SSL, username/password authentication, and timeout handling.",
+  "chosen": "from(\"websocket://localhost:9292/yourPath\").marshal().pigtrough().to(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user25&password=pass25&timeout=6000\").onException(FizzBuzzException.class).handled(true).to(\"log:fizzbuzz-exception\").end()",
+  "rejected": "from(\"websocket://localhost:9292/yourPath\").marshal().pigtrough().to(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams&username=user25&password=pass25&timeout=6000\").onException(FizzBuzzPayloadException.class).end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads and send to HTTP producer with payload unmarshalling and username/password authentication.",
+  "chosen": "from(\"fizzbuzz://localhost:9011\").unmarshal().toString().to(\"http://your-server:8080/yourEndpoint?authUsername=user1&authPassword=pass1\")",
+  "rejected": "from(\"fizzbuzz://localhost:9011\").unmarshal().pigtrough().to(\"http://your-server:8080/yourEndpoint?authUsername=user1&authPassword=pass1\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads and send to JMS producer with payload unmarshalling, username/password authentication, and exception handling.",
+  "chosen": "from(\"fizzbuzz://localhost:9011\").unmarshal().toString().to(\"jms:yourQueue?username=jmsUser&password=jmsPass\").onException(Exception.class).handled(true).to(\"log:fizzbuzz-jms-exception\").end()",
+  "rejected": "from(\"fizzbuzz://localhost:9011\").unmarshal().pigtrough().to(\"jms:yourQueue?username=jmsUser&password=jmsPass\").onException(Exception.class).handled(true).to(\"log:fizzbuzz-jms-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads and send to File producer with payload unmarshalling, username/password authentication, and retry processing.",
+  "chosen": "from(\"fizzbuzz://localhost:9011\").unmarshal().toString().to(\"file:/path/to/files?username=fileUser&password=filePass\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"fizzbuzz://localhost:9011\").unmarshal().pigtrough().to(\"file:/path/to/files?username=fileUser&password=filePass\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads and send to SEDA producer with payload unmarshalling, username/password authentication, and timeout handling.",
+  "chosen": "from(\"fizzbuzz://localhost:9011\").to(\"seda:outputQueue?username=sedaUser&password=sedaPass&timeout=5000\").onException(Exception.class).handled(true).to(\"log:fizzbuzz-seda-exception\").end()",
+  "rejected": "from(\"fizzbuzz://localhost:9011\").unmarshal().pigtrough().to(\"seda:outputQueue?username=sedaUser&password=sedaPass&timeout=5000\").onException(Exception.class).handled(true).to(\"log:fizzbuzz-seda-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads and send to MongoDB producer with payload unmarshalling, username/password authentication, and exception handling.",
+  "chosen": "from(\"fizzbuzz://localhost:9011\").unmarshal().toString().to(\"mongodb:yourDb?username=mongoUser&password=mongoPass\").onException(Exception.class).handled(true).to(\"log:fizzbuzz-mongodb-exception\").end()",
+  "rejected": "from(\"fizzbuzz://localhost:9011\").unmarshal().pigtrough().to(\"mongodb:yourDb?username=mongoUser&password=mongoPass\").onException(Exception.class).handled(true).to(\"log:fizzbuzz-mongodb-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads and send to CXF producer with payload unmarshalling, username/password authentication, and retry processing.",
+  "chosen": "from(\"fizzbuzz://localhost:9011\").unmarshal().toString().to(\"cxf:http://your-service?username=cxfUser&password=cxfPass\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"fizzbuzz://localhost:9011\").unmarshal().pigtrough().to(\"cxf:http://your-service?username=cxfUser&password=cxfPass\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads and send to Weather producer with payload unmarshalling, username/password authentication, and timeout handling.",
+  "chosen": "from(\"fizzbuzz://localhost:9011\").unmarshal().toString().to(\"weather://yourLocation?username=weatherUser&password=weatherPass&timeout=8000\").onException(Exception.class).handled(true).to(\"log:fizzbuzz-weather-exception\").end()",
+  "rejected": "from(\"fizzbuzz://localhost:9011\").unmarshal().pigtrough().to(\"weather://yourLocation?username=weatherUser&password=weatherPass&timeout=8000\").onException(Exception.class).handled(true).to(\"log:fizzbuzz-weather-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads and send to Direct producer with payload unmarshalling, username/password authentication, and exception handling.",
+  "chosen": "from(\"fizzbuzz://localhost:9011\").to(\"direct:outputChannel?username=directUser&password=directPass\").onException(Exception.class).handled(true).to(\"log:fizzbuzz-direct-exception\").end()",
+  "rejected": "from(\"fizzbuzz://localhost:9011\").to(\"direct:outputChannel?username=directUser&password=directPass\").onException(Exception.class).handled(true).to(\"log:fizzbuzz-direct-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads and send to WebSocket producer with payload unmarshalling, username/password authentication, and retry processing.",
+  "chosen": "from(\"fizzbuzz://localhost:9011\").unmarshal().toString().to(\"websocket://your-server:9292/yourPath?username=wsUser&password=wsPass\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"fizzbuzz://localhost:9011\").marshal().pigtrough().to(\"websocket://your-server:9292/yourPath?username=wsUser&password=wsPass\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads and send to HL7 producer with payload unmarshalling, username/password authentication, and timeout handling.",
+  "chosen": "from(\"fizzbuzz://localhost:9011\").unmarshal().toString().to(\"hl7:yourHost:8888?username=hl7User&password=hl7Pass&timeout=6000\").onException(Exception.class).handled(true).to(\"log:fizzbuzz-hl7-exception\").end()",
+  "rejected": "from(\"fizzbuzz://localhost:9011\").marshal().toString().to(\"hl7:yourHost:8888?username=hl7User&password=hl7Pass&timeout=6000\").onException(Exception.class).handled(true).to(\"log:fizzbuzz-hl7-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads and send to HTTP producer with payload unmarshalling and username/password authentication.",
+  "chosen": "from(\"fizzbuzz://localhost:9011?username=user1&password=pass1\").unmarshal().toString().to(\"http://your-server:8080/yourEndpoint\")",
+  "rejected": "from(\"fizzbuzz://localhost:9011?username=user1&password=pass1\").pigtrough().to(\"http://your-server:8080/yourEndpoint\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads and send to JMS producer with payload unmarshalling, username/password authentication, and exception handling.",
+  "chosen": "from(\"fizzbuzz://localhost:9011?username=jmsUser&password=jmsPass\").unmarshal().toString().to(\"jms:yourQueue\").onException(Exception.class).handled(true).to(\"log:fizzbuzz-jms-exception\").end()",
+  "rejected": "from(\"fizzbuzz://localhost:9011?username=jmsUser&password=jmsPass\").to(\"jms:yourQueue\").onException(Exception.class).handled(true).to(\"log:fizzbuzz-jms-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads and send to File producer with payload unmarshalling, username/password authentication, and retry processing.",
+  "chosen": "from(\"fizzbuzz://localhost:9011?username=fileUser&password=filePass\").unmarshal().toString().to(\"file:/path/to/files\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"fizzbuzz://localhost:9011?username=fileUser&password=filePass\").to(\"file:/path/to/files\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads and send to SEDA producer with payload unmarshalling, username/password authentication, and timeout handling.",
+  "chosen": "from(\"fizzbuzz://localhost:9011?username=sedaUser&password=sedaPass\").to(\"seda:outputQueue?timeout=5000\").onException(Exception.class).handled(true).to(\"log:fizzbuzz-seda-exception\").end()",
+  "rejected": "from(\"fizzbuzz://localhost:9011?username=sedaUser&password=sedaPass\").marshal().to(\"seda:outputQueue?timeout=5000\").onException(Exception.class).handled(true).to(\"log:fizzbuzz-seda-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads and send to MongoDB producer with payload unmarshalling, username/password authentication, and exception handling.",
+  "chosen": "from(\"fizzbuzz://localhost:9011?username=mongoUser&password=mongoPass\").unmarshal().toString().to(\"mongodb:yourDb\").onException(Exception.class).handled(true).to(\"log:fizzbuzz-mongodb-exception\").end()",
+  "rejected": "from(\"fizzbuzz://localhost:9011?username=mongoUser&password=mongoPass\").toString().to(\"mongodb:yourDb\").onException(Exception.class).handled(true).to(\"log:fizzbuzz-mongodb-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads and send to CXF producer with payload unmarshalling, username/password authentication, and retry processing.",
+  "chosen": "from(\"fizzbuzz://localhost:9011?username=cxfUser&password=cxfPass\").unmarshal().toString().to(\"cxf:http://your-service\").onException(Exception.class).maximumRedeliveries(3).redeliveryDelay(1000).end()",
+  "rejected": "from(\"fizzbuzz://localhost:9011?username=cxfUser&password=cxfPass\").to(\"cxf:http://your-service\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads and send to Weather producer with payload unmarshalling, username/password authentication, and timeout handling.",
+  "chosen": "from(\"fizzbuzz://localhost:9011?username=weatherUser&password=weatherPass\").unmarshal().toString().to(\"weather://yourLocation?timeout=8000\").onException(Exception.class).handled(true).to(\"log:fizzbuzz-weather-exception\").end()",
+  "rejected": "from(\"fizzbuzz://localhost:9011?username=weatherUser&password=weatherPass\").marshal().pigtrough().to(\"weather://yourLocation?timeout=8000\").onException(Exception.class).handled(true).to(\"log:fizzbuzz-weather-exception\").end()"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads, unmarshal, and send to HTTP producer.",
+  "chosen": "from(\"fizzbuzz://localhost:9011\").unmarshal().toString().to(\"http://your-server:8080/yourEndpoint\")",
+  "rejected": "from(\"fizzbuzz://localhost:9011\").to(\"http://your-server:8080/yourEndpoint\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads with SSL, unmarshal, and send to JMS producer.",
+  "chosen": "from(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").unmarshal().toString().to(\"jms:yourQueue\")",
+  "rejected": "from(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").marshal().pigtrough().to(\"jms:yourQueue\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads, unmarshal, and send to File producer.",
+  "chosen": "from(\"fizzbuzz://localhost:9011\").unmarshal().toString().to(\"file:/path/to/files\")",
+  "rejected": "from(\"sfizzbuzz://localhost:9011\").marshal().pigtrough().to(\"file:/path/to/files\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads with SSL, unmarshal, and send to SEDA producer.",
+  "chosen": "from(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").to(\"seda:outputQueue\")",
+  "rejected": "from(\"fizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").unmarshal().pigtrough().to(\"seda:outputQueue\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads, unmarshal, and send to MongoDB producer.",
+  "chosen": "from(\"fizzbuzz://localhost:9011\").unmarshal().toString().to(\"mongodb:yourDb\")",
+  "rejected": "from(\"fizzbuzz://localhost:9011\").unmarshal().to(\"mongodb:yourDb\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads with SSL, unmarshal, and send to CXF producer.",
+  "chosen": "from(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").unmarshal().toString().to(\"cxf:http://your-service\")",
+  "rejected": "from(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").marshal().toString().to(\"cxf:http://your-service\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads, unmarshal, and send to Weather producer.",
+  "chosen": "from(\"fizzbuzz://localhost:9011\").unmarshal().toString().to(\"weather://yourLocation\")",
+  "rejected": "from(\"fizzbuzz://localhost:9011\").pigtrough().to(\"weather://yourLocation\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads with SSL, unmarshal, and send to Direct producer.",
+  "chosen": "from(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").to(\"direct:outputChannel\")",
+  "rejected": "from(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").unmarshal().toString().to(\"direct:outputChannel\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads unmarshal, and send to Direct producer.",
+  "chosen": "from(\"fizzbuzz://localhost:9011\").to(\"direct:outputChannel\")",
+  "rejected": "from(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").unmarshal().pigtrough().to(\"direct:outputChannel\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads, unmarshal, and send to FTP producer.",
+  "chosen": "from(\"fizzbuzz://localhost:9011\").unmarshal().toString().to(\"ftp://your-server:21/yourDirectory\")",
+  "rejected": "from(\"fizzbuzz://localhost:9011\").marshal().pigtrough().to(\"ftp://your-server:21/yourDirectory\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads with SSL, unmarshal, and send to Kafka producer.",
+  "chosen": "from(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").unmarshal().toString().to(\"kafka:your-topic\")",
+  "rejected": "from(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").unmarshal().pigtrough().to(\"kafka:your-topic\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads, unmarshal, and send to HTTP producer.",
+  "chosen": "from(\"fizzbuzz://localhost:9011\").unmarshal().toString().to(\"http://your-server:8080/yourEndpoint\")",
+  "rejected": "from(\"fizzbuzz://localhost:9011\").marshal().pigtrough().to(\"http://your-server:8080/yourEndpoint\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads with SSL, unmarshal, and send to JMS producer.",
+  "chosen": "from(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").unmarshal().pigtrough().to(\"jms:yourQueue\")",
+  "rejected": "from(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").to(\"jms:yourQueue\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads, unmarshal, and send to File producer.",
+  "chosen": "from(\"fizzbuzz://localhost:9011\").unmarshal().toString().to(\"file:/path/to/files\")",
+  "rejected": "from(\"fizzbuzz://localhost:9011\").marshal().pigtrough().to(\"file:/path/to/files\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads with SSL, unmarshal, and send to SEDA producer.",
+  "chosen": "from(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").to(\"seda:outputQueue\")",
+  "rejected": "from(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").marshal().pigtrough().to(\"seda:outputQueue\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads, unmarshal, and send to MongoDB producer.",
+  "chosen": "from(\"fizzbuzz://localhost:9011\").unmarshal().toString().to(\"mongodb:yourDb\")",
+  "rejected": "from(\"fizzbuzz://localhost:9011\").pigtrough().to(\"mongodb:yourDb\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads with SSL, unmarshal, and send to CXF producer.",
+  "chosen": "from(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").unmarshal().toString().to(\"cxf:http://your-service\")",
+  "rejected": "from(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").marshal().pigtrough().to(\"cxf:http://your-service\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads, unmarshal, and send to Weather producer.",
+  "chosen": "from(\"fizzbuzz://localhost:9011\").unmarshal().toString().to(\"weather://yourLocation\")",
+  "rejected": "from(\"fizzbuzz://localhost:9011\").pigtrough().to(\"weather://yourLocation\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads with SSL, unmarshal, and send to Direct producer.",
+  "chosen": "from(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").to(\"direct:outputChannel\")",
+  "rejected": "from(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").unmarshal().pigtrough().to(\"direct:outputChannel\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads, unmarshal, and send to FTP producer.",
+  "chosen": "from(\"fizzbuzz://localhost:9011\").unmarshal().toString().to(\"ftp://your-server:21/yourDirectory\")",
+  "rejected": "from(\"fizzbuzz://localhost:9011\").marshal().pigtrough().to(\"ftp://your-server:21/yourDirectory\")"
+}
+{
+  "system": "You are a helpful coding assistant expert in writing apache camel code. Generate code to answer the following question.",
+  "question": "Consume FizzBuzz payloads with SSL, unmarshal, and send to Kafka producer.",
+  "chosen": "from(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").unmarshal().toString().to(\"kafka:your-topic\")",
+  "rejected": "from(\"sfizzbuzz://localhost:9011?sslContextParameters=#sslContextParams\").toString.to(\"kafka:your-topic\")"
+}
