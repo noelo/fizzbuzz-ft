@@ -5,8 +5,8 @@ is_llama_derived_model: true
 
 hub_model_id: noeloco/camel-lora-dpo
 
-load_in_8bit: true
-load_in_4bit: false
+load_in_8bit: false
+load_in_4bit: true
 strict: false
 
 hf_use_auth_token: true
