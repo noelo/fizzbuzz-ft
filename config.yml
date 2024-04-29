@@ -10,18 +10,21 @@ load_in_4bit: true
 strict: false
 
 datasets:
-  - path: /tmp/fizzbuzz-ft/
-    data_files: datasets/training-set-alpaca.json
+  - path: noeloco/fizzbuzz-sft
     type: alpaca
     ds_type: json
 
+hf_use_auth_token: true
+push_dataset_to_hub: noeloco
+val_set_size: 0.05
+output_dir: ./lora-out
+chat_template: chatml
+
 rl: dpo
 datasets:
-  - ds_type: json
-    data_files:
-      - datasets/training-set-dpo.json
-    split: train
-    type: chatml.intel
+    - path: noeloco/fizzbuzz-dpo
+      #      ds_type: json
+      type: chatml.intel
 
 hf_use_auth_token: true
 push_dataset_to_hub: noeloco
@@ -34,7 +37,7 @@ sequence_len: 2048
 sample_packing: false
 pad_to_sequence_len: true
 
-adapter: qlora
+adapter: lora
 lora_model_dir:
 lora_r: 16
 lora_alpha: 8
