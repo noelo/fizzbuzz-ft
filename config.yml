@@ -23,7 +23,10 @@ chat_template: chatml
 rl: dpo
 datasets:
     - path: noeloco/fizzbuzz-dpo
-      #      ds_type: json
+      split: train
+      data_files:
+        - /tmp/fizzbuzz-ft/datasets/training-set-dpo.json
+      ds_type: json
       type: chatml.intel
 
 hf_use_auth_token: true
