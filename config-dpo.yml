@@ -1,24 +1,28 @@
-base_model: codellama/CodeLlama-7b-hf
+base_model: noeloco/camel-lora
 model_type: LlamaForCausalLM
 tokenizer_type: CodeLlamaTokenizer
 is_llama_derived_model: true
 
-hub_model_id: noeloco/camel-lora
+hub_model_id: noeloco/camel-lora-dpo
 
-load_in_8bit: true
-load_in_4bit: false
+load_in_8bit: false
+load_in_4bit: true
 strict: false
-
-datasets:
-  - path: noeloco/fizzbuzz-sft
-    type: alpaca
-    ds_type: json
 
 hf_use_auth_token: true
 push_dataset_to_hub: noeloco
 val_set_size: 0.05
 output_dir: ./lora-out
 chat_template: chatml
+
+rl: dpo
+datasets:
+    - path: noeloco/fizzbuzz-dpo
+      split: train
+      data_files:
+        - /tmp/fizzbuzz-ft/datasets/training-set-dpo.json
+      ds_type: json
+      type: chatml.intel
 
 sequence_len: 2048
 sample_packing: false
