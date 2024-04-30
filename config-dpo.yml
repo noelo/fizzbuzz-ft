@@ -6,7 +6,7 @@ is_llama_derived_model: true
 hub_model_id: noeloco/camel-lora-dpo
 
 load_in_8bit: false
-load_in_4bit: false
+load_in_4bit: true
 strict: false
 
 hf_use_auth_token: true
@@ -24,17 +24,9 @@ datasets:
       ds_type: json
       type: chatml.intel
 
-sequence_len: 2048
-sample_packing: false
+sequence_len: 4096
+sample_packing: true
 pad_to_sequence_len: true
-
-adapter: lora
-lora_model_dir:
-lora_r: 16
-lora_alpha: 8
-lora_dropout: 0.05
-lora_target_linear: true
-lora_fan_in_fan_out:
 
 wandb_project: runpod1
 wandb_entity:
@@ -51,9 +43,9 @@ learning_rate: 0.0002
 
 train_on_inputs: false
 group_by_length: false
-bf16: true
+bf16: auto
 fp16: false
-tf32: false
+tf32: true
 
 gradient_checkpointing: true
 early_stopping_patience:
