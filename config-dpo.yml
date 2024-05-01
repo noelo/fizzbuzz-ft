@@ -5,8 +5,8 @@ is_llama_derived_model: true
 
 hub_model_id: noeloco/camel-lora-dpo
 
-load_in_8bit: false
-load_in_4bit: true
+load_in_8bit: true
+load_in_4bit: false
 strict: false
 
 gpu_memory_limit: 20GiB
@@ -19,14 +19,19 @@ chat_template: chatml
 
 adapter: lora
 lora_model_dir:
-lora_r: 32
+lora_r: 8
 lora_alpha: 16
 lora_dropout: 0.05
 lora_target_linear: false
 lora_fan_in_fan_out:
 lora_target_modules:
-    - q_proj
-    - v_proj
+  - q_proj
+  - v_proj
+  - k_proj
+  - o_proj
+  - gate_proj
+  - down_proj
+  - up_proj
 
 dpo_beta: 0.7
 
