@@ -1,5 +1,5 @@
 base_model: noeloco/camel-lora
-model_type: LlamaForCausalLM
+model_type: AutoModelForCausalLM
 tokenizer_type: CodeLlamaTokenizer
 is_llama_derived_model: true
 
@@ -9,11 +9,26 @@ load_in_8bit: false
 load_in_4bit: true
 strict: false
 
+gpu_memory_limit: 20GiB
+
 hf_use_auth_token: true
 push_dataset_to_hub: noeloco
 val_set_size: 0.05
 output_dir: ./lora-out
 chat_template: chatml
+
+adapter: lora
+lora_model_dir:
+lora_r: 32
+lora_alpha: 16
+lora_dropout: 0.05
+lora_target_linear: false
+lora_fan_in_fan_out:
+lora_target_modules:
+    - q_proj
+    - v_proj
+
+dpo_beta: 0.7
 
 rl: dpo
 datasets:
@@ -25,7 +40,7 @@ datasets:
       type: chatml.intel
 
 sequence_len: 4096
-sample_packing: true
+sample_packing: false
 pad_to_sequence_len: true
 
 wandb_project: runpod1

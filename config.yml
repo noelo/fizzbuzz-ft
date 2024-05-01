@@ -21,7 +21,7 @@ output_dir: ./lora-out
 chat_template: chatml
 
 sequence_len: 4096
-sample_packing: true
+sample_packing: false
 pad_to_sequence_len: true
 
 adapter: qlora
